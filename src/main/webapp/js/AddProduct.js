@@ -8,7 +8,7 @@ $(document).ready(function(){
 		var data1=selectedOption.val();
 		
 		$.ajax({
-			url:"GetProductIdController",
+			url:"CreateProductIdController",
 			data:{"productType":data1},
 			type:'GET',
 			success: function(data,testStatus,jqXHR){
@@ -16,7 +16,6 @@ $(document).ready(function(){
 				console.log("Success");
 			},
 			error: function(jqXHR,textStatus,errorThrown){
-				console.log(data);
 				console.log("error");
 			}
 		})

@@ -1,3 +1,5 @@
+<%@page import="java.sql.*"%>
+<%@page import="com.sales.db.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -12,10 +14,12 @@ body {
 	background-size: 100%;
 	background-repeat: no-repeat;
 }
+
 table {
-height:100px;
-font-size:20px;
+	height: 100px;
+	font-size: 20px;
 }
+
 .my-custom-scrollbar {
 	position: relative;
 	height: 600px;
@@ -25,11 +29,22 @@ font-size:20px;
 .table-wrapper-scroll-y {
 	display: block;
 }
-.table{
---bs-table-striped-color:white;
---bs-table-bg:#004979;
+
+.table { -
+	-bs-table-striped-color: white; -
+	-bs-table-bg: #004979;
 }
 </style>
+<script type="text/javascript">
+	function checkProductType() {
+		var productType = document.getElementById('cmbProductGroup').value;
+		if (productType === "") {
+			alert("Please select product group");
+			return false;
+		}
+		return true;
+	}
+</script>
 </head>
 <body>
 	<div class="container-fluid">
@@ -44,75 +59,82 @@ font-size:20px;
 					</div>
 				</div>
 				<div class="row">
-					<form action="">
+					<form onsubmit="return checkProductType()"
+						action="ShowAllProducts.jsp">
 						<table cellpadding="22px">
 							<tr>
 								<td>Product Group*</td>
-								<td><select id="cmbUserType" name="cmbProductGroup">
+								<td><select id="cmbProductGroup" name="cmbProductGroup">
 										<option value="">Select Product Group *</option>
-										<option value=Student>Paint</option>
-										<option value=Faculty>Tools</option>
-										<option value=Faculty>Hardware</option>
-										<option value=Faculty>Pipe&Cistern</option>
-										<option value=Faculty>Sanitary</option>
-										<option value=Faculty>Plumbing</option>
-										<option value=Faculty>Bathroom</option>
-										<option value=Faculty>Electrics</option>
-										<option value=Faculty>Locks</option>
-										<option value=Faculty>Woods</option>
+										<option value="paint">Paint</option>
+										<option value="tools">Tools</option>
+										<option value="hardware">Hardware</option>
+										<option value="pipe">Pipe and Cistern</option>
+										<option value="sanitary">Sanitary</option>
+										<option value="plumbing">Plumbing</option>
+										<option value="bathroom">Bathroom</option>
+										<option value="electric">Electrics</option>
+										<option value="locks">Locks</option>
+										<option value="woods">Woods</option>
 								</select></td>
+								<td><input type="submit" class="btn btn-primary"
+									value="Show" name="show"></td>
 							</tr>
 						</table>
 					</form>
 				</div>
 				<div class="row">
 					<div class="table-wrapper-scroll-y my-custom-scrollbar">
-						<table class="table table-bordered table-striped mb-0 "style="color:white;" >
+						<table class="table table-bordered  mb-0 "
+							style="color: white; background-color: #005ce6;">
 							<thead>
 								<tr>
-									<th scope="col">#</th>
-									<th scope="col">First</th>
-									<th scope="col">Last</th>
-									<th scope="col">Handle</th>
+									<th scope="col">S.No.</th>
+									<th scope="col">Product Id</th>
+									<th scope="col">Product Type</th>
+									<th scope="col">Product Name</th>
+									<th scope="col">Cost Price</th>
+									<th scope="col">Customer Price</th>
+									<th scope="col">Builder Price</th>
+									<th scope="col">Labour Price</th>
+									<th scope="col">Description</th>
+									<th scope="col">Available Quantity</th>
 								</tr>
 							</thead>
 							<tbody>
+								<%
+								String s1 = request.getParameter("show");
+								int i=1;
+								if (s1 != null) {
+									String productType = request.getParameter("cmbProductGroup");
+									try {
+										Statement st = ConnectionProvider.getObject().st;
+										String q = "select * from " + productType + " order by productName";
+										ResultSet rs = st.executeQuery(q);
+										while (rs.next()) {
+								%>
 								<tr>
-									<th scope="row">1</th>
-									<td>Mark</td>
-									<td>Otto</td>
-									<td>@mdo</td>
+									<th scope="row"><%=i++ %></th>
+									<td><%=rs.getString(1) %></td>
+									<td><%=rs.getString(2) %></td>
+									<td><%=rs.getString(3) %></td>
+									<td><%=rs.getString(4) %></td>
+									<td><%=rs.getString(5) %></td>
+									<td><%=rs.getString(6) %></td>
+									<td><%=rs.getString(7) %></td>
+									<td><%=rs.getString(8) %></td>
+									<td><%=rs.getString(9) %></td>
 								</tr>
-								<tr>
-									<th scope="row">2</th>
-									<td>Jacob</td>
-									<td>Thornton</td>
-									<td>@fat</td>
-								</tr>
-								<tr>
-									<th scope="row">3</th>
-									<td>Larry</td>
-									<td>the Bird</td>
-									<td>@twitter</td>
-								</tr>
-								<tr>
-									<th scope="row">4</th>
-									<td>Mark</td>
-									<td>Otto</td>
-									<td>@mdo</td>
-								</tr>
-								<tr>
-									<th scope="row">5</th>
-									<td>Jacob</td>
-									<td>Thornton</td>
-									<td>@fat</td>
-								</tr>
-								<tr>
-									<th scope="row">6</th>
-									<td>Larry</td>
-									<td>the Bird</td>
-									<td>@twitter</td>
-								</tr>		
+								<%
+								}
+							     	} catch (Exception e) {
+							     		%>
+							     		<span style="color:white; font-size:24px;"><%= e%></span>
+							     		<%
+								System.out.println(e);
+								}
+						}
+								%>
 							</tbody>
 						</table>
 					</div>
@@ -120,5 +142,9 @@ font-size:20px;
 			</div>
 		</div>
 	</div>
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+		integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+		crossorigin="anonymous"></script>
+	<!-- 	<script src="js/ShowAllProducts.js"></script> -->
 </body>
 </html>

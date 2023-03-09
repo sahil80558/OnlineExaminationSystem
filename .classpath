@@ -18,5 +18,8 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="E:/JSONjar_files/json-20220924.jar"/>
+	<classpathentry kind="lib" path="E:/GSON/gson-2.2.2.jar"/>
+	<classpathentry kind="lib" path="E:/devtools/spring-boot-devtools-3.0.4.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

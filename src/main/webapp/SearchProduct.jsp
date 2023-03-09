@@ -16,12 +16,26 @@ body {
 table {
 	height: 200px;
 }
-element.style{
-height:40px
+
+element.style {
+	height: 40px
+}
+
+.top-buffer {
+	margin-top: 30px;
+}
+
+.col-3 {
+	width: 22%;
 }
 </style>
+<script>
+	function hideTable() {
+		$('#updateTable').hide();
+	}
+</script>
 </head>
-<body>
+<body onload="hideTable();">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-3">
@@ -29,14 +43,13 @@ height:40px
 			</div>
 			<div class="col-9">
 				<center>
-					<div class="container-fluid">
-						<div class="row">
-							<h2 style="color: white;">Search Product</h2>
-						</div>
-					</div>
 					<div class="row">
-						<form action="">
+						<form id="getAllProductDetails">
 							<table cellpadding="22px">
+								<tr>
+									<td align="center" colspan="6"><label
+										style="font-size: 24px;"> Search Product</label></td>
+								</tr>
 								<tr>
 									<td>Product Group*</td>
 									<td><select id="cmbProductGroup" name="cmbProductGroup">
@@ -55,29 +68,80 @@ height:40px
 								</tr>
 								<tr>
 									<td>Product Code</td>
-									<td><input type="text" placeholder="Product Code"
+									<td><input type="text" placeholder="Product Code" autocomplete="off"
 										id="searchbyid" name="productCode" required></td>
 								</tr>
 								<tr>
 									<td>Product Name</td>
-									<td><input type="text" placeholder="Product Name"
-										name="productName" name="searchbyname" id="searchbyname"
+									<td><input type="text" placeholder="Product Name" autocomplete="off"
+										name="productName" id="searchbyname"
 										required></td>
 								</tr>
 								<tr>
-									<td align="center" colspan="2"><input class="B"
-										name="search" id="search" type="submit" value="Search"></td>
+									<td align="center" colspan="2">
+										<button name="search" class="B" id="search">Search</button>
+									</td>
 								</tr>
 							</table>
 						</form>
 						<div class="col-md-6"
-							style="position: relative; margin-top: -96px; margin-left: 598px; height:40px;">
+							style="position: relative; margin-top: -96px; margin-left: 598px; height: 40px;">
 							<div class="list-group" id="show-list1"></div>
 						</div>
 						<div class="col-md-5"
-							style="position: relative; margin-top: -169px; margin-left: 598px; height:40px;">
+							style="position: relative; margin-top: -169px; margin-left: 598px; height: 40px;">
 							<div class="list-group" id="show-list2"></div>
 						</div>
+						<span style="color:white; font-size:24px;" id="updated"></span>
+					</div>
+					<div class="row top-buffer">
+						<form id="updateForm">
+							<table cellpadding="22px" id="updateTable">
+								<tr>
+									<td align="center" colspan="6"><label
+										style="font-size: 24px;"> Update Product Details</label></td>
+								</tr>
+								<tr>
+									<td>Product Code</td>
+									<td><input type="text" placeholder="Product Code"
+										id="updateProductCode" name="updateProductCode" required
+										readonly></td>
+									<td>Product Type</td>
+									<td><input type="text" placeholder="Product Type"
+										id="updateProductType" name="updateProductType" required
+										readonly></td>
+									<td>Product Name</td>
+									<td><input type="text" placeholder="Product Name"
+										id="updateProductName" name="updateProductName" required></td>
+								</tr>
+								<tr>
+									<td>Cost Price</td>
+									<td><input type="text" placeholder="Cost Price"
+										id="updateCostPrice" name="updateCostPrice" required></td>
+									<td>Customer Price</td>
+									<td><input type="text" placeholder="Customer Price"
+										id="updateCustomerPrice" name="updateCustomerPrice" required></td>
+									<td>Builder Price</td>
+									<td><input type="text" placeholder="Builder Price"
+										id="updatebuilderPrice" name="updatebuilderPrice" required></td>
+								</tr>
+								<tr>
+									<td>Labour Price</td>
+									<td><input type="text" placeholder="Labour Price"
+										id="updateLabourPrice" name="updateLabourPrice" required></td>
+									<td>Description</td>
+									<td><input type="text" placeholder="Description"
+										id="updateDescription" name="updateDescription" required></td>
+									<td>Available Quantity</td>
+									<td><input type="text" placeholder="Available Quantity"
+										id="updateQuantity" name="updateQuantity" required></td>
+								</tr>
+								<tr>
+									<td align="center" colspan="6"><input class="B"
+										type="submit" value="Update"></td>
+								</tr>
+							</table>
+						</form>
 					</div>
 				</center>
 			</div>
@@ -87,5 +151,6 @@ height:40px
 		integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
 		crossorigin="anonymous"></script>
 	<script src="js/SearchProduct.js"></script>
+	<script src="js/GetDetails.js"></script>
 </body>
 </html>

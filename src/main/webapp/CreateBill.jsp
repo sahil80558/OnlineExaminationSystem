@@ -23,7 +23,7 @@
 body {
 	font-family: "Open Sans", sans-serif;
 	line-height: 1.25;
-	background-color: cyan;
+	background-color: #ff9261;
 }
 
 .billDetails {
@@ -34,6 +34,10 @@ body {
 
 td {
 	text-align: left;
+}
+table, th, td {
+  border: 2px solid white;
+  border-collapse: collapse;
 }
 
 #formItem label {
@@ -65,6 +69,11 @@ h3 {
 .col-3 {
 	width: 21%;
 }
+
+.modal-dialog { 
+	width: 500px; 
+	height: 600px;
+}
 </style>
 <!-- <link rel="stylesheet" href="CSS/bill.css"> -->
 </head>
@@ -76,7 +85,7 @@ h3 {
 			</div>
 			<div class="col-9">
 				<h3 id="invoiceHeading"
-					style="background-color: powderblue; color: red;">Invoice</h3>
+					style="background-color: #cbf8ff; color: red;">Invoice</h3>
 				<table cellpadding="10px" class="billDetails">
 					<colgroup>
 						<col span="1" style="width: 15%;">
@@ -94,12 +103,8 @@ h3 {
 						<tr>
 							<td><h3>Mobile No.</h3></td>
 							<td><input type="number"></td>
-							<td style="color: black;"><h3>Date:</h3> <lable
-									style="color:black;">30</lable style="color:black;">-<lable style="color:black;">12</lable>-<lable
-									style="color:black;">2023</lable></td>
-							<td style="color: black;"><h3>Time:</h3> <lable
-									style="color:black;">30</lable style="color:black;">-<lable style="color:black;">12</lable>-<lable
-									style="color:black;">20</lable></td>
+							<td style="color: black;"><h3>Date: &nbsp&nbsp&nbsp&nbsp&nbsp<span><script>document.write(new Date().toLocaleDateString('en-GB'));</script></span></h3></td>
+							<td style="color: black;"><h3>Time: &nbsp&nbsp&nbsp&nbsp&nbsp<span><script>document.write(new Date().toLocaleTimeString());</script></span></h3></td>
 						</tr>
 						<tr>
 							<td><h3>Address</h3></td>
@@ -124,7 +129,7 @@ h3 {
 				<hr>
 				<br>
 				<h3>Product Details</h3>
-				<table id="products" class="products" cellpadding="10px">
+				<table id="addProduct" class="products" cellpadding="10px" style="border: 1px solid black;">
 					<tbody>
 						<tr>
 							<th>S.No</th>
@@ -133,13 +138,6 @@ h3 {
 							<th>Price</th>
 							<th>Sub Total</th>
 						</tr>
-						<!-- 						<tr> -->
-						<!-- 							<td><input type="text" name="productId"></td> -->
-						<!-- 							<td><input type="text" name="productName"></td> -->
-						<!-- 							<td><input type="text" name="productQuantity"></td> -->
-						<!-- 							<td><input type="text" name="productPrice"></td> -->
-						<!-- 							<td><input type="text" name="productTotalAmount"></td> -->
-						<!-- 						</tr> -->
 					</tbody>
 				</table>
 				<div class="container mt-5">
@@ -148,42 +146,53 @@ h3 {
 						Product</button>
 					<div class="modal" id="myModal">
 						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title">Search Product</h5>
-									<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-								</div>
-								<div class="modal-body">
-									<form>
+							<form id="getAllProductDetails">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title">Search Product</h5>
+										<button type="button" class="btn-close"
+											data-bs-dismiss="modal" id="modalOnClose"></button>
+									</div>
+									<div class="modal-body">
 										<div class="mb-3">
-											<select id="cmbUserType" name="cmbProductGroup">
+											<select id="cmbProductGroup" name="cmbProductGroup">
 												<option value="">Select Product Group *</option>
-												<option value=Student>Paint</option>
-												<option value=Faculty>Tools</option>
-												<option value=Faculty>Hardware</option>
-												<option value=Faculty>Pipe and Tanks</option>
-												<option value=Faculty>Sanitary</option>
-												<option value=Faculty>Plumbing</option>
-												<option value=Faculty>Bathroom</option>
-												<option value=Faculty>Electrics</option>
-												<option value=Faculty>Locks</option>
-												<option value=Faculty>Woods</option>
+												<option value="paint">Paint</option>
+												<option value="tools">Tools</option>
+												<option value="hardware">Hardware</option>
+												<option value="pipes">Pipe and Tanks</option>
+												<option value="sanitary">Sanitary</option>
+												<option value="plumbing">Plumbing</option>
+												<option value="bathroom">Bathroom</option>
+												<option value="electrics">Electrics</option>
+												<option value="locks">Locks</option>
+												<option value="woods">Woods</option>
 											</select>
 										</div>
 										<div class="mb-3">
-											<label class="form-label required">Product Id</label> <input
-												type="email" class="form-control">
+											<label class="form-label required">Product Id</label> <input autocomplete="off"
+												type="text" class="form-control" placeholder="Product Code"
+												id="searchbyid" name="productCode" required>
 										</div>
 										<div class="mb-3">
-											<label class="form-label required">Product Name </label> <input
-												type="email" class="form-control">
+											<label class="form-label required">Product Name </label> <input autocomplete="off"
+												type="text" class="form-control" placeholder="Product Name"
+												name="productName" id="searchbyname" required>
 										</div>
-									</form>
+									</div>
+									<div class="modal-footer">
+										<button type="submit" class="btn btn-primary">Add</button>
+									</div>
 								</div>
-								<div class="modal-footer">
-									<button type="submit" class="btn btn-primary">Add</button>
-								</div>
-							</div>
+							</form>
+						</div>
+						<div class="col-md-5"
+							style="position: relative; margin-top: -362px; margin-left: 610px; height: 40px;">
+							<div class="list-group" id="show-list1"></div>
+						</div>
+						<div class="col-md-5"
+							style="position: relative; margin-top: -120px; margin-left: 610px; height: 40px;">
+							<div class="list-group" id="show-list2"></div>
 						</div>
 					</div>
 				</div>
@@ -200,5 +209,10 @@ h3 {
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
 		crossorigin="anonymous"></script>
-</body>
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+		integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+		crossorigin="anonymous"></script>
+	<script src="js/CreateBill.js"></script>
+	<script src="js/GetDetails.js"></script>
+ </body>
 </html>

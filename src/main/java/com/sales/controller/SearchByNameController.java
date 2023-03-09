@@ -18,15 +18,15 @@ public class SearchByNameController extends HttpServlet {
 		String searchName=request.getParameter("query");
 		String productType=request.getParameter("productType");
 		String searchId=request.getParameter("searchId");
-		System.out.println("searchText="+searchName);
-		System.out.println("searchId="+searchId);
-		SearchByNameService spbn=new SearchByNameService();
-		ArrayList<String> al=spbn.getSearchResults(searchName,productType,searchId);
-		String aId="";
-		if(searchName!=null)aId="a2";
-		else aId="a1";
+		SearchByNameService sbn=new SearchByNameService();
+		ArrayList<String> al=sbn.getSearchResults(searchName,productType,searchId);
+		
+		String id="";
+	    if(searchName!=null)id="a1";
+	    else id="a2";
+	    
 	    for(int i=0;i<al.size();i++) 
-			response.getWriter().append("<a id="+'"'+aId+'"'+" href="+'"'+"#"+'"'+" class="+'"'+"list-group-item list-group-item-action border-1"+'"'+">"+ al.get(i)+"</a>");
+			response.getWriter().append("<a id="+'"'+id+'"'+" onclick="+'"'+"putData(this);" +'"'+" href="+'"'+"#"+'"'+" class="+'"'+"list-group-item list-group-item-action border-1"+'"'+">"+ al.get(i)+"</a>");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

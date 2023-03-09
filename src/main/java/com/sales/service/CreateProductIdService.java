@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class GetProductIdService {
+public class CreateProductIdService {
 	Statement st = ConnectionProvider.getObject().st;
 	Connection con=ConnectionProvider.getObject().con;
 
@@ -45,17 +45,17 @@ public class GetProductIdService {
 			break;
 		}
 		try {
-			String q = "select count(productId) from tools";
+			String q = "select count(productId) from "+productType+"";
 			ResultSet rs = st.executeQuery(q);
 			if (rs.next()) {
 				id = rs.getInt(1);
 				id = id + 1;
-				String str = String.valueOf(id);
 			} else {
 				id= 1;
 			}
 		} catch (Exception e) {
 			System.out.println(e);
+			return ""+e;
 		}
 		sb.append(String.valueOf(id));
 		return new String(sb);
